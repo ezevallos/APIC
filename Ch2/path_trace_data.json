@@ -1,0 +1,230 @@
+{
+    "response": {
+        "request": {
+            "sourceIP": "10.1.15.117",
+            "destIP": "10.2.1.22",
+            "periodicRefresh": false,
+            "id": "feb8f5c6-56d1-45ec-9a49-bd4afac5c887",
+            "status": "COMPLETED",
+            "createTime": 1506693815419,
+            "lastUpdateTime": 1506693823127
+        },
+        "lastUpdate": "Fri Sep 29 14:03:43 UTC 2017",
+        "networkElementsInfo": [
+            {
+                "id": "48cdeb9b-b412-491e-a80c-7ec5bbe98167",
+                "type": "wireless",
+                "ip": "10.1.15.117",
+                "linkInformationSource": "Switched"
+            },
+            {
+                "id": "cd6d9b24-839b-4d58-adfe-3fdf781e1782",
+                "name": "AP7081.059f.19ca",
+                "type": "Unified AP",
+                "ip": "10.1.14.3",
+                "role": "ACCESS",
+                "linkInformationSource": "Switched",
+                "tunnels": [
+                    "CAPWAP Tunnel"
+                ]
+            },
+            {
+                "id": "5b5ea8da-8c23-486a-b95e-7429684d25fc",
+                "name": "CAMPUS-Access1",
+                "type": "Switches and Hubs",
+                "ip": "10.1.12.1",
+                "ingressInterface": {
+                    "physicalInterface": {
+                        "id": "dd2c47ea-ad19-4a1e-ad0e-82d9deefd61b",
+                        "name": "GigabitEthernet1/0/26"
+                    }
+                },
+                "egressInterface": {
+                    "physicalInterface": {
+                        "id": "38c72319-855e-43bc-8458-94f695d435b6",
+                        "name": "GigabitEthernet1/0/1"
+                    }
+                },
+                "role": "ACCESS",
+                "linkInformationSource": "Switched",
+                "tunnels": [
+                    "CAPWAP Tunnel"
+                ]
+            },
+            {
+                "id": "c8ed3e49-5eeb-4dee-b120-edeb179c8394",
+                "name": "CAMPUS-Dist1",
+                "type": "Switches and Hubs",
+                "ip": "10.255.1.5",
+                "ingressInterface": {
+                    "physicalInterface": {
+                        "id": "b10dcdea-1675-4509-b554-f047f6a37595",
+                        "name": "GigabitEthernet5/5"
+                    }
+                },
+                "egressInterface": {
+                    "physicalInterface": {
+                        "id": "1ac5854f-4659-442f-9bd2-f775aa3b260a",
+                        "name": "GigabitEthernet5/38"
+                    }
+                },
+                "role": "DISTRIBUTION",
+                "linkInformationSource": "Switched",
+                "tunnels": [
+                    "CAPWAP Tunnel"
+                ]
+            },
+            {
+                "id": "ae19cd21-1b26-4f58-8ccd-d265deabb6c3",
+                "name": "Campus-WLC-5508",
+                "type": "Wireless Controller",
+                "ip": "10.1.14.2",
+                "ingressInterface": {
+                    "physicalInterface": {
+                        "id": "4f063bed-7ca8-49dc-8fd4-63ff1613d59f",
+                        "name": "GigabitEthernet0/0/1"
+                    },
+                    "virtualInterface": [
+                        {
+                            "id": "eb8ef593-7174-4b73-85b8-35cd067a6bec",
+                            "name": "clientinterface"
+                        }
+                    ]
+                },
+                "egressInterface": {
+                    "physicalInterface": {
+                        "id": "4f063bed-7ca8-49dc-8fd4-63ff1613d59f",
+                        "name": "GigabitEthernet0/0/1"
+                    }
+                },
+                "role": "ACCESS",
+                "linkInformationSource": "Switched",
+                "tunnels": [
+                    "CAPWAP Tunnel"
+                ]
+            },
+            {
+                "id": "c8ed3e49-5eeb-4dee-b120-edeb179c8394",
+                "name": "CAMPUS-Dist1",
+                "type": "Switches and Hubs",
+                "ip": "10.255.1.5",
+                "ingressInterface": {
+                    "physicalInterface": {
+                        "id": "1ac5854f-4659-442f-9bd2-f775aa3b260a",
+                        "name": "GigabitEthernet5/38"
+                    },
+                    "virtualInterface": [
+                        {
+                            "id": "4bfe4712-4860-4b4e-bc3e-58f64d3db870",
+                            "name": "Vlan600"
+                        }
+                    ]
+                },
+                "egressInterface": {
+                    "physicalInterface": {
+                        "id": "0b2984dd-7dbd-4cf3-9308-246bcf31673c",
+                        "name": "TenGigabitEthernet3/1"
+                    }
+                },
+                "role": "DISTRIBUTION",
+                "linkInformationSource": "ECMP"
+            },
+            {
+                "id": "1b329f52-95eb-44ad-9314-55932162ab86",
+                "name": "CAMPUS-Core2",
+                "type": "Switches and Hubs",
+                "ip": "10.1.10.1",
+                "ingressInterface": {
+                    "physicalInterface": {
+                        "id": "22f37b71-25f3-4b9a-945a-2c7d28345540",
+                        "name": "TenGigabitEthernet1/5"
+                    }
+                },
+                "egressInterface": {
+                    "physicalInterface": {
+                        "id": "8e3fd588-deef-4dc8-9885-560e0f48bf49",
+                        "name": "GigabitEthernet1/3"
+                    }
+                },
+                "role": "CORE",
+                "linkInformationSource": "ECMP"
+            },
+            {
+                "id": "55450140-de19-47b5-ae80-bfd741b23fd9",
+                "name": "CAMPUS-Router2",
+                "type": "Routers",
+                "ip": "10.1.4.2",
+                "ingressInterface": {
+                    "physicalInterface": {
+                        "id": "20c9326c-82b0-47b9-aee5-f57b7725bd01",
+                        "name": "GigabitEthernet0/0/1"
+                    }
+                },
+                "egressInterface": {
+                    "physicalInterface": {
+                        "id": "e595740b-38fd-4c87-9cb3-407672ed9dc5",
+                        "name": "GigabitEthernet0/0/3"
+                    }
+                },
+                "role": "BORDER ROUTER",
+                "linkInformationSource": "OSPF"
+            },
+            {
+                "id": "UNKNOWN",
+                "name": "UNKNOWN",
+                "ip": "UNKNOWN",
+                "role": "UNKNOWN",
+                "linkInformationSource": "NetFlow"
+            },
+            {
+                "id": "6ce631db-9212-4587-867f-b8f3aed1702d",
+                "name": "Branch-Router2",
+                "type": "Routers",
+                "ip": "10.2.2.2",
+                "ingressInterface": {
+                    "physicalInterface": {
+                        "id": "1b46c64c-bb92-4998-bee2-283118075156",
+                        "name": "GigabitEthernet0/2"
+                    }
+                },
+                "egressInterface": {
+                    "physicalInterface": {
+                        "id": "1b46c64c-bb92-4998-bee2-283118075156",
+                        "name": "GigabitEthernet0/2"
+                    }
+                },
+                "role": "BORDER ROUTER",
+                "linkInformationSource": "CONNECTED"
+            },
+            {
+                "id": "26450a30-57d8-4b56-b8f1-6fc535d67645",
+                "name": "Branch-Access1",
+                "type": "Switches and Hubs",
+                "ip": "10.2.1.17",
+                "ingressInterface": {
+                    "physicalInterface": {
+                        "id": "05186c34-2ed8-4db4-bba3-ac9c2b68ad90",
+                        "name": "GigabitEthernet1/0/1"
+                    }
+                },
+                "egressInterface": {
+                    "physicalInterface": {
+                        "id": "7075521d-4d7b-4218-92f9-79b60e054635",
+                        "name": "GigabitEthernet1/0/47"
+                    }
+                },
+                "role": "ACCESS",
+                "linkInformationSource": "Switched"
+            },
+            {
+                "id": "f624d4f3-0ab9-4ae3-b09d-62051edbd8f3",
+                "type": "wired",
+                "ip": "10.2.1.22"
+            }
+        ],
+        "detailedStatus": {
+            "aclTraceCalculation": "SUCCESS"
+        }
+    },
+    "version": "1.0"
+}

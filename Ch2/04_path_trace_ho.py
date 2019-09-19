@@ -8,21 +8,28 @@ October 15, 2017
 #===================================================
 #+++++++++++Add Values+++++++++++++++
 #import functions
-
+import requests
+import json
+import time
+from my_apic_em_functions import *
+from tabulate import *
 
 #disable SSL certificate warnings
-
+requests.packages.urllib3.disable_warnings()
 
 #++++++++++++++++++++++++++++++++++++
 
 
 #+++++++++++Add Values+++++++++++++++
 # Path Trace API URL for flow_analysis endpoint
-post_url =    #URL of API endpoint
+api_url =  "https://devnetsbx-netacad-apicem-1.cisco.com/api/v1/flow-analysis"  #URL of API endpoint
 # Get service ticket number using imported function
-ticket =      # Add your function name that gets service ticket
+ticket = get_ticket() # Add your function name that gets service ticket
 # Create headers for requests to the API
-headers =     # Create dictionary containing headers for the request
+headers = {
+    "content-type": "application/json",
+    "X-Auth-Token": ticket
+} # Create dictionary containing headers for the request
 #++++++++++++++++++++++++++++++++++++
 
 #============================
@@ -30,14 +37,10 @@ headers =     # Create dictionary containing headers for the request
 #============================
 
 #+++++++++++Add Values+++++++++++++++
-#display message identifying what is to be printed on the next line
-
-# Add your function name that displays hosts
-
-# Display message identifying what is to be printed
-
-# Add your function name that displays network devices
-
+print("List of hosts on the network: ")
+print_hosts()
+print("List of devices on the network: ")
+print_devices()
 #++++++++++++++++++++++++++++++++++++
 
 print('\n\n') #prints two blank lines to format output
@@ -48,20 +51,19 @@ print('\n\n') #prints two blank lines to format output
 
 while True:
     #+++++++++++Add Values+++++++++++++++
-    s_ip =  # Request user input for source IP address
-    d_ip =  # Request user input for destination IP address
+    s_ip = input("Please enter the source host IP address for the path trace: ")
+    d_ip = input("Please enter the destination host IP address for the path trace: ")
     #++++++++++++++++++++++++++++++++++++
-    #Various error traps should be completed here - POSSIBLE CHALLENGE
-
+    # Various error traps should be completed here - POSSIBLE CHALLENGE
     if s_ip != '' or d_ip != '':
-        #this creates a python dictionary that will be converted to a JSON object and posted
+        # this creates a python dictionary that will be converted to a JSON object and posted
         path_data = {
-                    "sourceIP": s_ip, 
-                    "destIP": d_ip
-                    }
+            "sourceIP": s_ip, 
+            "destIP": d_ip
+                }
         #Optional: Add statements that display the source and destination IP addresses that will be used. And asks user to verify. Loop if not verified by user.
-        
-        
+        print("Source IP address is: ",       path_data["sourceIP"])
+        print("Destination IP address is: ",  path_data["destIP"])
         break  #Exit loop if values supplied
     else:
         print("\n\nYOU MUST ENTER IP ADDRESSES TO CONTINUE.\nUSE CTRL-C TO QUIT\n")
@@ -73,12 +75,13 @@ while True:
 
 #+++++++++++Add Values+++++++++++++++    
 # Post request to initiate Path Trace
-path =  #Convert the path_data dictionary to JSON and assign it to this variable
-resp =  #Make the request. Construct the post request to the API
+path = json.dumps(path_data) #Convert the path_data dictionary to JSON and assign it to this variable
+resp = requests.post(api_url, path, headers=headers, verify=False) #Make the request. Construct the post request to the API
 
 # Inspect the return, get the Flow Analysis ID, put it into a variable
 resp_json = resp.json()
-flowAnalysisId =  # Assign the value of the flowAnalysisID key of resp_json.
+flowAnalysisId = resp_json["response"]["flowAnalysisId"]
+print("FLOW ANALYSIS ID: ", flowAnalysisId) # Assign the value of the flowAnalysisID key of resp_json.
 #+++++++++++++++++++++++++++++++++++++
 
 print('FLOW ANALYSIS ID: ' + flowAnalysisId)
@@ -93,7 +96,7 @@ status = ""
 
 #+++++++++++Add Values+++++++++++++++
 #Add Flow Analysis ID to the endpoint URL in order to check the status of this specific path trace
-check_url =  #Append the flowAnalyisId to the flow analysis end point URL that was created in Section 1
+check_url = api_url + "/" + flowAnalysisId #Append the flowAnalyisId to the flow analysis end point URL that was created in Section 1
 #++++++++++++++++++++++++++++++++++++
 
 checks = 0 #variable to increment within the while loop. Will trigger exit from loop after x iterations
@@ -103,20 +106,18 @@ while status != 'COMPLETED':
     r = requests.get(check_url,headers=headers,params="",verify = False)
     response_json = r.json()
     #+++++++++++Add Values+++++++++++++++
-    status =   # Assign the value of the status of the path trace request from response_json
+    status = response_json["response"]["request"]["status"]  # Assign the value of the status of the path trace request from response_json
     #++++++++++++++++++++++++++++++++++++
-    
-    #wait one second before trying again
+    print("REQUEST STATUS: ", status)  # Print the status as the loop runs
+    # wait one second before trying again
     time.sleep(1)
-    if checks == 15: #number of iterations before exit of loop; change depending on conditions
-        print("Number of status checks exceeds limit. Possible problem with Path Trace.")
-        #break
-        sys.exit()
-    elif status == 'FAILED':
-        print('Problem with Path Trace')
-        #break
-        sys.exit()
-    print('REQUEST STATUS: ' + status) #Print the status as the loop runs
+    if checks == 15:  # number of iterations before exit of loop; change depending on conditions
+        # break the execution
+        raise Exception("Number of status checks exceeds limit. Possible problem with Path Trace.!")
+    elif status == "FAILED":
+        # break the execution
+        raise Exception("Problem with Path Trace - FAILED!")
+    checks += 1
     
 
 #============================
@@ -125,9 +126,9 @@ while status != 'COMPLETED':
 
 # Create required variables
 #+++++++++++Add Values+++++++++++++++
-path_source =  #Assign the source address for the trace from response_json
-path_dest =    #Assign the destination address for the trace from response_json
-networkElementsInfo =  #Assign the list of all network element dictionaries from response_json
+path_source = response_json["response"]["request"]["sourceIP"] #Assign the source address for the trace from response_json
+path_dest =  response_json["response"]["request"]["destIP"]  #Assign the destination address for the trace from response_json
+networkElementsInfo = response_json["response"]["networkElementsInfo"] #Assign the list of all network element dictionaries from response_json
 #+++++++++++++++++++++++++++++++++++++
 
 all_devices = []     # A list variable to store the hosts and devices
